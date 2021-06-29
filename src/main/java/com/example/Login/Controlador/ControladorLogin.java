@@ -16,36 +16,41 @@ import java.io.IOException;
 @WebServlet(name = "ControladorLogin", value = "/ControladorLogin")
 public class ControladorLogin extends HttpServlet {
 
-
+    UsuarioDAO userDB;
+    LoginDAO logindao;
+    public ControladorLogin(){
+        super();
+        userDB = new UsuarioDAO();
+        logindao = new LoginDAO();
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Usuario user = new Usuario();
-
         String userName = request.getParameter("username");
         String password = request.getParameter("Password");
+        Usuario user = new Usuario();
+
         user.setNombreUsuario(userName);
         user.setContra(password);
-        UsuarioDAO userDB = new UsuarioDAO();
-        LoginDAO logindao = new LoginDAO();
+
+        System.out.println(user.getNombreUsuario());
+        System.out.println(user.getContra());
+
         Usuario userAllDB = new Usuario();
 
-        System.out.println("here");
+
 
         try {
 
-            System.out.println("here");
-         boolean success = logindao.validar(user.getNombreUsuario(),user.getContra());
+         boolean success = this.logindao.validar(user.getNombreUsuario(),user.getContra());
 
          if (success){
-             userAllDB = userDB.selectAllData(user);
-             System.out.println(userAllDB.getIdUsuario());
-             response.sendRedirect("HomeUser.jsp");
 
+             response.sendRedirect("HomeUser.jsp");
 
          }else{
              request.setAttribute("error","usuario o contraseña incorrectos");
-             request.getRequestDispatcher("index.jsp").forward(request,response);
+             request.getRequestDispatcher("Error.jsp").forward(request,response);
          }
 
         } catch (Exception e) {

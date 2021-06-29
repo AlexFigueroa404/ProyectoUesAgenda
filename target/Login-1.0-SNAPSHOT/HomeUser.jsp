@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page session="true"%>
+<%@page session="true" %>
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -27,10 +27,11 @@
                         <img src="user.png" height="60" width="60"/>
                     </li>
                     <li class="dropdown-item" href="#"><span class="text-primary ">
-                        <%
-                           String username = (String)session.getAttribute("username");
-                        %>
-                        ${username}
+                       <%
+                           String username = (String) session.getAttribute("username");
+                       %>
+                       ${username}
+
                     </span> <br>
                     </li>
                     <li class="dropdown-item"><span class="text-secondary">

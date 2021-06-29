@@ -17,7 +17,6 @@ public class UsuarioDAO extends Conexion {
 
         try {
 
-            Usuario usuarioDB;
             connection = Conexion.getconnection();
             String Query = "SELECT * FROM public.usuarios where nombre_usuario=? and contra=?";
             pstm = connection.prepareStatement(Query);
@@ -25,22 +24,21 @@ public class UsuarioDAO extends Conexion {
             pstm.setString(2, usuario.getContra());
             resultSet = pstm.executeQuery();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 int idUsuario = resultSet.getInt("id_usuario");
                 String nombre = resultSet.getString("nombre");
                 String apellido = resultSet.getString("apellido");
                 String direccion = resultSet.getString("direccion");
                 String telefono = resultSet.getString("telefono");
+                String nombreUsuario = resultSet.getString("nombre_usuario");
 
-                usuarioDB = new Usuario();
+               this.usuarioDB = new Usuario();
                 usuarioDB.setNombre(nombre);
                 usuarioDB.setIdUsuario(idUsuario);
                 usuarioDB.setApellido(apellido);
-                usuarioDB.setNombreUsuario(usuario.getNombreUsuario());
+                usuarioDB.setNombreUsuario(nombreUsuario);
                 usuarioDB.setDireccion(direccion);
                 usuarioDB.setTelefono(telefono);
-
-
             }
 
 
@@ -55,6 +53,7 @@ public class UsuarioDAO extends Conexion {
                 Conexion.close(connection);
             }
         }
+
 
         return usuarioDB;
     }
