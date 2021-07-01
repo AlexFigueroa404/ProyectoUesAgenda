@@ -16,13 +16,7 @@ import java.io.IOException;
 @WebServlet(name = "ControladorLogin", value = "/ControladorLogin")
 public class ControladorLogin extends HttpServlet {
 
-    UsuarioDAO userDB;
-    LoginDAO logindao;
-    public ControladorLogin(){
-        super();
-        userDB = new UsuarioDAO();
-        logindao = new LoginDAO();
-    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,25 +27,38 @@ public class ControladorLogin extends HttpServlet {
         user.setNombreUsuario(userName);
         user.setContra(password);
 
-        System.out.println(user.getNombreUsuario());
-        System.out.println(user.getContra());
-
+        UsuarioDAO userDB = new UsuarioDAO();
+        LoginDAO logindao = new LoginDAO();
         Usuario userAllDB = new Usuario();
-
 
 
         try {
 
-         boolean success = this.logindao.validar(user.getNombreUsuario(),user.getContra());
+            boolean success = logindao.validar(user.getNombreUsuario(), user.getContra());
 
-         if (success){
+            if (success) {
+                userAllDB = userDB.selectAllData(user);
 
-             response.sendRedirect("HomeUser.jsp");
 
-         }else{
-             request.setAttribute("error","usuario o contraseña incorrectos");
-             request.getRequestDispatcher("Error.jsp").forward(request,response);
-         }
+                if (userAllDB != null) {
+                    HttpSession session = request.getSession();
+
+                    session.setAttribute("user", userAllDB);
+                   // session.setAttribute("id_usuario", userAllDB.getIdUsuario());
+                  //  session.setAttribute("nombre", userAllDB.getNombre());
+                   // session.setAttribute("apellido", userAllDB.getApellido());
+                   // session.setAttribute("nombreUsuario", userAllDB.getNombreUsuario());
+
+                    response.sendRedirect("HomeUser.jsp");
+                } else {
+                    request.setAttribute("error", "usuario o contraseña incorrectos");
+                    request.getRequestDispatcher("Error.jsp").forward(request, response);
+                }
+
+            } else {
+                request.setAttribute("error", "usuario o contraseña incorrectos");
+                request.getRequestDispatcher("Error.jsp").forward(request, response);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,5 +1,14 @@
+<%@ page import="com.example.Login.Entidad.Usuario" %>
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page session="true" %>
+
+<%
+    Usuario user = (Usuario) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("Error.jsp");
+    }
+%>
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -20,17 +29,15 @@
             <div class="dropdown dropdown-menu-end me-4">
                 <button class="btn btn-outline-primary dropdown-toggle me-4" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                    nombre de usuario
+                        <%= Objects.requireNonNull(user).getNombre()%> <%= Objects.requireNonNull(user).getApellido()%>
                 </button>
                 <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
                     <li class="dropdown-item" href="#">
                         <img src="user.png" height="60" width="60"/>
                     </li>
                     <li class="dropdown-item" href="#"><span class="text-primary ">
-                       <%
-                           String username = (String) session.getAttribute("username");
-                       %>
-                       ${username}
+
+                        <%= user.getNombreUsuario()%>
 
                     </span> <br>
                     </li>
@@ -39,7 +46,7 @@
                     </span>
                     </li>
 
-                    <form action="" method="post" class="mt-2 mb-2">
+                    <form action="ControladorCierreSesion" method="post" class="mt-2 mb-2">
                         <button class="btn btn-outline-primary" type="submit">Logout</button>
                     </form>
                 </ul>

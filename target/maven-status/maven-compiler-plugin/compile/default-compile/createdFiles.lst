@@ -5,3 +5,4 @@ com\example\Login\Entidad\Agenda.class
 com\example\Login\DAO\Conexion.class
 com\example\Login\DAO\LoginDAO.class
 com\example\Login\Controlador\ControladorLogin.class
+com\example\Login\Controlador\ControladorRegistro.class
