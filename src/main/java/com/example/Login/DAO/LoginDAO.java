@@ -18,7 +18,9 @@ public class LoginDAO extends Conexion {
 
         try {
             connection = Conexion.getconnection();
+
             String Query = "SELECT * FROM public.usuarios where nombre_usuario=? and contra=?";
+
             pstm = connection.prepareStatement(Query);
             pstm.setString(1, nombre);
             pstm.setString(2, contra);
@@ -27,6 +29,7 @@ public class LoginDAO extends Conexion {
             while (resultSet.next()) {
                 nombreUsuarioDB = resultSet.getString("nombre_usuario");
                 contraDB = resultSet.getString("contra");
+
                 if (nombre.equals(nombreUsuarioDB) && contra.equals(contraDB)) {
                     existe = true;
                 }

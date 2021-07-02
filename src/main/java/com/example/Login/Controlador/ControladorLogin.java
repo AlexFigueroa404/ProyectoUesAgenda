@@ -22,15 +22,17 @@ public class ControladorLogin extends HttpServlet {
 
         String userName = request.getParameter("username");
         String password = request.getParameter("Password");
+
         Usuario user = new Usuario();
 
         user.setNombreUsuario(userName);
         user.setContra(password);
 
         UsuarioDAO userDB = new UsuarioDAO();
-        LoginDAO logindao = new LoginDAO();
-        Usuario userAllDB = new Usuario();
 
+        LoginDAO logindao = new LoginDAO();
+
+        Usuario userAllDB = new Usuario();
 
         try {
 
@@ -41,13 +43,9 @@ public class ControladorLogin extends HttpServlet {
 
 
                 if (userAllDB != null) {
-                    HttpSession session = request.getSession();
 
+                    HttpSession session = request.getSession();
                     session.setAttribute("user", userAllDB);
-                   // session.setAttribute("id_usuario", userAllDB.getIdUsuario());
-                  //  session.setAttribute("nombre", userAllDB.getNombre());
-                   // session.setAttribute("apellido", userAllDB.getApellido());
-                   // session.setAttribute("nombreUsuario", userAllDB.getNombreUsuario());
 
                     response.sendRedirect("HomeUser.jsp");
                 } else {

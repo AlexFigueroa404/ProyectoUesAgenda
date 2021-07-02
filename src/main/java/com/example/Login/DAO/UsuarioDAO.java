@@ -18,7 +18,9 @@ public class UsuarioDAO extends Conexion {
         try {
 
             connection = Conexion.getconnection();
+
             String Query = "SELECT * FROM public.usuarios where nombre_usuario=? and contra=?";
+
             pstm = connection.prepareStatement(Query);
             pstm.setString(1, usuario.getNombreUsuario());
             pstm.setString(2, usuario.getContra());

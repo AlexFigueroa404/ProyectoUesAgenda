@@ -4,9 +4,17 @@
 <%@page session="true" %>
 
 <%
+
     Usuario user = (Usuario) session.getAttribute("user");
-    if (user == null) {
-        response.sendRedirect("Error.jsp");
+    String userName = null;
+    String name = null;
+    String lastName = null;
+    if (user != null) {
+        userName = user.getNombreUsuario();
+        name = user.getNombre();
+        lastName = user.getApellido();
+    } else {
+        response.sendRedirect("index.jsp");
     }
 
 
@@ -31,7 +39,7 @@
             <div class="dropdown dropdown-menu-end me-4">
                 <button class="btn btn-outline-primary dropdown-toggle me-4" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <%= Objects.requireNonNull(user).getNombre()%> <%= Objects.requireNonNull(user).getApellido()%>
+                    <%=name%> <%=lastName%>
                 </button>
                 <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton1">
                     <li class="dropdown-item" href="#">
@@ -39,7 +47,7 @@
                     </li>
                     <li class="dropdown-item" href="#"><span class="text-primary ">
 
-                        <%= user.getNombreUsuario()%>
+                        <%=userName%>
 
                     </span> <br>
                     </li>
@@ -48,7 +56,7 @@
                     </span>
                     </li>
 
-                    <form action="ControladorCierreSesion" method="post" class="mt-2 mb-2">
+                    <form action="ControladorCierreSesion" method="get" class="mt-2 mb-2">
                         <button class="btn btn-outline-primary" type="submit">Logout</button>
                     </form>
                 </ul>
